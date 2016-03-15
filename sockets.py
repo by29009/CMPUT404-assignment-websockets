@@ -109,6 +109,15 @@ def update(entity):
     #     myWorld.delete(entity)
     #     return Response(json.dumps(dict()))
 
+nextUnique = 1
+@app.route("/unique")
+def get_unique():
+    """Get a unique ID for this client"""
+    global nextUnique
+    d = {'id': str(nextUnique)}
+    nextUnique += 1
+    return Response(json.dumps(d))
+
 @app.route("/world", methods=['POST','GET'])    
 def world():
     """Return JSON of the world"""

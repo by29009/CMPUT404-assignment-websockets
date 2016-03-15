@@ -168,3 +168,25 @@ initialPull();
 
 // 30 frames per second
 setInterval( update, 1000/30.0);
+
+function wsSetup()
+{
+    var url = "ws://"+host+"/subscribe";   
+    socket = new WebSocket(url);
+    socket.onopen = function() {
+        //XXX: TODO What are you going to do here?
+    };
+    socket.onerror = function(msg) {
+        debug("WebSocket Error:" + msg.data);
+    };
+    socket.onmessage = function(msg) {  
+        try {
+            debug("WebSocket Recv:" + msg.data);
+            //XXX: TODO What are you going to do here?            
+        } catch (e) {
+            alert("socket on message: " + e);
+        }
+    }; 
+}
+
+wsSetup();
