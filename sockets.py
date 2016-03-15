@@ -87,12 +87,14 @@ def subscribe_socket(ws):
     try:
         while not ws.closed:
             msg = ws.receive()
-            entities = json.loads(msg)
-            for entity in entities:
-                data = entities[entity]
-                myWorld.set(entity, data)
-
-            ws.send(msg)
+            try:
+                entities = json.loads(msg)
+                for entity in entities:
+                    data = entities[entity]
+                    myWorld.set(entity, data)
+            except:
+                print('Started up!')
+                ws.send(msg)
         socks.remove(ws)
     except:
         socks.remove(ws)
