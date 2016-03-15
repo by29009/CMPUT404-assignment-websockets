@@ -214,9 +214,6 @@ function wsSetup()
 
             if(changed)
 				drawNextFrame();
-			else
-				console.log("WAT?");
-
         }
         catch(e)
         {
