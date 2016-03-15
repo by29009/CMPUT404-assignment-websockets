@@ -154,7 +154,7 @@ function initialPull()
 	});
 	$.getJSON("/world", function(initialWorld)
 	{
-		$.each( initialWorld, function( entity, data ) {world[entity] = data;});
+		$.each( initialWorld, function( entity, data ) {if(data !== null) world[entity] = data;});
 	});
 }
 
