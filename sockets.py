@@ -93,7 +93,7 @@ def subscribe_socket(ws):
                     data = entities[entity]
                     myWorld.set(entity, data)
             except:
-                print('Started up!')
+                print('Opened connection!')
                 ws.send(msg)
         socks.remove(ws)
     except:
