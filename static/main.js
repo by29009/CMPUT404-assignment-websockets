@@ -194,7 +194,7 @@ function wsSetup()
     socket.onmessage = function(msg) {  
         try
         {
-            //console.log("WebSocket Recv:" + msg.data);        
+            //console.log("WebSocket Recv:" + msg.data);
             obj = JSON.parse(msg.data);
             var changed = false;
             $.each(obj, function(entity, data)
