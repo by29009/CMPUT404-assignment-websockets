@@ -195,11 +195,26 @@ function wsSetup()
         try
         {
             console.log("WebSocket Recv:" + msg.data);
-            //XXX: TODO What are you going to do here?            
+            //XXX: TODO What are you going to do here?           
+            obj = JSON.parse(msg.data);
+            $.each(obj, function(entity, data)
+            	{
+            		if(data != null)
+            		{
+            			world[entity] = data;
+            			changed = true;
+            		}
+            		else
+            		{
+						delete world[entity];
+						changed = true;
+            		}
+            	});
+
         }
-        catch (e)
+        catch(e)
         {
-            alert("socket on message: " + e);
+            alert("unknown error ");
         }
     }; 
 }
