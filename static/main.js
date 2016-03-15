@@ -194,12 +194,27 @@ function wsSetup()
     socket.onmessage = function(msg) {  
         try
         {
-            console.log("WebSocket Recv:" + msg.data);
-            //XXX: TODO What are you going to do here?            
+            //console.log("WebSocket Recv:" + msg.data);        
+            obj = JSON.parse(msg.data);
+            $.each(obj, function(entity, data)
+            	{
+            		console.log(entity, data);
+            		if(data !== null)
+            		{
+            			world[entity] = data;
+            			changed = true;
+            		}
+            		else
+            		{
+						delete world[entity];
+						changed = true;
+            		}
+            	});
+
         }
-        catch (e)
+        catch(e)
         {
-            alert("socket on message: " + e);
+            alert("unknown error ");
         }
     }; 
 }
