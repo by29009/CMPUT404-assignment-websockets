@@ -217,7 +217,7 @@ function wsSetup()
         }
         catch(e)
         {
-            alert("unknown error ");
+            alert("unknown error");
         }
     }; 
 }
