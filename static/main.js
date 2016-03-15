@@ -196,6 +196,7 @@ function wsSetup()
         {
             //console.log("WebSocket Recv:" + msg.data);        
             obj = JSON.parse(msg.data);
+            var changed = false;
             $.each(obj, function(entity, data)
             	{
             		console.log(entity, data);
@@ -210,6 +211,9 @@ function wsSetup()
 						changed = true;
             		}
             	});
+
+            if(changed)
+				drawNextFrame();
 
         }
         catch(e)
