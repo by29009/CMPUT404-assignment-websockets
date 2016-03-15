@@ -61,7 +61,7 @@ class World:
 
 myWorld = World()        
 
-sockets = []
+socks = []
 
 def set_listener( entity, data ):
     ''' do something with the update ! '''
@@ -83,7 +83,7 @@ def subscribe_socket(ws):
     '''Fufill the websocket URL of /subscribe, every update notify the
        websocket and read updates from the websocket '''
     # XXX: TODO IMPLEMENT ME
-    sockets.append(ws)
+    socks.append(ws)
     try:
         while not ws.closed:
             msg = ws.receive()
@@ -93,9 +93,9 @@ def subscribe_socket(ws):
                 myWorld.set(entity, data)
 
             ws.send(msg)
-        sockets.remove(ws)
+        socks.remove(ws)
     except:
-        sockets.remove(ws)
+        socks.remove(ws)
 
 def flask_post_json():
     '''Ah the joys of frameworks! They do so much work for you
