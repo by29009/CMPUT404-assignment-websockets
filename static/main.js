@@ -93,7 +93,10 @@ function pushEntity(entity, data)
  //    success: function(result) {}
 	// });
 
-	socket.send(JSON.stringify({entity: data}));
+	obj = {};
+	obj[entity] = data;
+
+	socket.send(JSON.stringify(obj));
 }
 
 function deleteEntity(entity)
@@ -105,7 +108,10 @@ function deleteEntity(entity)
  //    success: function(result) {}
 	// });
 
-	socket.send(JSON.stringify({entity: null}));
+	obj = {};
+	obj[entity] = null;
+
+	socket.send(JSON.stringify(obj));
 }
 
 function addEntity(entity, data) {
