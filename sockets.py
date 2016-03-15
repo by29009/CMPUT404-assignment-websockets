@@ -107,7 +107,7 @@ def update(entity):
         myWorld.set(entity, data)
         return Response(json.dumps(myWorld.get(entity)))
     elif request.method == 'DELETE':
-        myWorld.delete(entity)
+        # myWorld.delete(entity)
         return Response(json.dumps(dict()))
 
 nextUnique = 1
