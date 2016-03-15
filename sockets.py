@@ -35,7 +35,7 @@ class World:
     def add_set_listener(self, listener):
         self.listeners.append( listener )
 
-    def update(self, entity, key, value):
+    def update(self, entity, key, value): # NOT CALLED
         entry = self.space.get(entity,dict())
         entry[key] = value
         self.space[entity] = entry
@@ -65,6 +65,8 @@ socks = []
 
 def set_listener( entity, data ):
     ''' do something with the update ! '''
+    for ws in socks:
+        ws.send(json.dumps({entity: data}))
 
 myWorld.add_set_listener( set_listener )
         
@@ -91,11 +93,9 @@ def subscribe_socket(ws):
                 entities = json.loads(msg)
                 for entity in entities:
                     data = entities[entity]
-                    print(entity)
                     myWorld.set(entity, data)
             except:
                 print('Opened connection!')
-                ws.send(msg)
         socks.remove(ws)
     except:
         socks.remove(ws)
