@@ -91,6 +91,7 @@ def subscribe_socket(ws):
                 entities = json.loads(msg)
                 for entity in entities:
                     data = entities[entity]
+                    print(entity)
                     myWorld.set(entity, data)
             except:
                 print('Opened connection!')
