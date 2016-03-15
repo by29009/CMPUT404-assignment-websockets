@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 import flask
-from flask import Flask, request
+from flask import Flask, request, redirect, Response
 from flask_sockets import Sockets
 import gevent
 from gevent import queue
@@ -69,7 +69,7 @@ myWorld.add_set_listener( set_listener )
 @app.route('/')
 def hello():
     '''Return something coherent here.. perhaps redirect to /static/index.html '''
-    return None
+    return redirect('/static/index.html')
 
 def read_ws(ws,client):
     '''A greenlet function that reads from the websocket and updates the world'''
@@ -97,25 +97,39 @@ def flask_post_json():
 @app.route("/entity/<entity>", methods=['POST','PUT'])
 def update(entity):
     '''update the entities via this interface'''
-    return None
+    if request.method == 'PUT':
+        data = flask_post_json()
+        myWorld.set(entity, data)
+        return Response(json.dumps(myWorld.get(entity)))
+    elif request.method == 'POST':
+        data = flask_post_json()
+        myWorld.set(entity, data)
+        return Response(json.dumps(myWorld.get(entity)))
+    # elif request.method == 'DELETE':
+    #     myWorld.delete(entity)
+    #     return Response(json.dumps(dict()))
 
 @app.route("/world", methods=['POST','GET'])    
 def world():
-    '''you should probably return the world here'''
-    return None
+    """Return JSON of the world"""
+    if request.method == 'GET':
+        return Response(json.dumps(myWorld.world()))
+    elif request.method == 'POST':
+        data = flask_post_json()
+        # do something with the data?
+        return Response(json.dumps(myWorld.world()))
 
 @app.route("/entity/<entity>")    
 def get_entity(entity):
     '''This is the GET version of the entity interface, return a representation of the entity'''
-    return None
-
+    entity = myWorld.get(entity)
+    return Response(json.dumps(entity)), 200
 
 @app.route("/clear", methods=['POST','GET'])
 def clear():
     '''Clear the world out!'''
-    return None
-
-
+    myWorld.clear()
+    return Response(json.dumps(myWorld.world()))
 
 if __name__ == "__main__":
     ''' This doesn't work well anymore:
