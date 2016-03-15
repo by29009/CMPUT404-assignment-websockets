@@ -84,24 +84,28 @@ function drawFrame() {
 
 function pushEntity(entity, data)
 {
-	$.ajax({
-    url: '/entity/' + entity,
-    type: 'PUT',
-    data: JSON.stringify(data),
-    contentType: "application/json",
-    dataType: "json",
-    success: function(result) {}
-	});
+	// $.ajax({
+ //    url: '/entity/' + entity,
+ //    type: 'PUT',
+ //    data: JSON.stringify(data),
+ //    contentType: "application/json",
+ //    dataType: "json",
+ //    success: function(result) {}
+	// });
+
+	socket.send(JSON.stringify({entity: data}));
 }
 
 function deleteEntity(entity)
 {
-	$.ajax({
-    url: '/entity/' + entity,
-    type: 'DELETE',
-    dataType: "json",
-    success: function(result) {}
-	});
+	// $.ajax({
+ //    url: '/entity/' + entity,
+ //    type: 'DELETE',
+ //    dataType: "json",
+ //    success: function(result) {}
+	// });
+
+	socket.send(JSON.stringify({entity: null}));
 }
 
 function addEntity(entity, data) {
