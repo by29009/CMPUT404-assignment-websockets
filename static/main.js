@@ -171,19 +171,24 @@ setInterval( update, 1000/30.0);
 
 function wsSetup()
 {
-    var url = "ws://"+host+"/subscribe";   
+    var url = "ws://"+host+"/subscribe";
     socket = new WebSocket(url);
-    socket.onopen = function() {
-        //XXX: TODO What are you going to do here?
+    socket.onopen = function()
+    {
+        socket.send("OPENED");
     };
-    socket.onerror = function(msg) {
-        debug("WebSocket Error:" + msg.data);
+    socket.onerror = function(msg)
+    {
+        console.log("WebSocket Error:" + msg.data);
     };
     socket.onmessage = function(msg) {  
-        try {
-            debug("WebSocket Recv:" + msg.data);
+        try
+        {
+            console.log("WebSocket Recv:" + msg.data);
             //XXX: TODO What are you going to do here?            
-        } catch (e) {
+        }
+        catch (e)
+        {
             alert("socket on message: " + e);
         }
     }; 

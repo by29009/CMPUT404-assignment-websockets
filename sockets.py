@@ -81,8 +81,9 @@ def subscribe_socket(ws):
     '''Fufill the websocket URL of /subscribe, every update notify the
        websocket and read updates from the websocket '''
     # XXX: TODO IMPLEMENT ME
-    return None
-
+    while not ws.closed:
+        msg = ws.receive()
+        ws.send(msg)
 
 def flask_post_json():
     '''Ah the joys of frameworks! They do so much work for you
@@ -94,7 +95,7 @@ def flask_post_json():
     else:
         return json.loads(request.form.keys()[0])
 
-@app.route("/entity/<entity>", methods=['POST','PUT'])
+@app.route("/entity/<entity>", methods=['POST','PUT','DELETE'])
 def update(entity):
     '''update the entities via this interface'''
     if request.method == 'PUT':
@@ -105,9 +106,9 @@ def update(entity):
         data = flask_post_json()
         myWorld.set(entity, data)
         return Response(json.dumps(myWorld.get(entity)))
-    # elif request.method == 'DELETE':
-    #     myWorld.delete(entity)
-    #     return Response(json.dumps(dict()))
+    elif request.method == 'DELETE':
+        myWorld.delete(entity)
+        return Response(json.dumps(dict()))
 
 nextUnique = 1
 @app.route("/unique")
